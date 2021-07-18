@@ -1,1 +1,27 @@
-<h1>Welcome to My Pojects Review App</h1>
+{% extends 'awards/base.html' %}
+{% load bootstrap3 %} {% load static %}
+
+{% block content %}
+<div class="container">
+    <h1>Welcome to My Pojects Review App</h1>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-7">
+            {% for project in all_projects %}
+                <h2 class="text text-center">{{project.project_title}}</h2>
+                <img src="{{project.project_image.url}}" alt="{{project.project_title}}">
+                <p>{{project.project_description}}</p>
+                <p>{{project.project_link}}</p>
+
+            {% endfor %}
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+
+
+
+</div>
+
+{% endblock %}
+

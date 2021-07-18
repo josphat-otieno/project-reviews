@@ -8,6 +8,10 @@ urlpatterns = [
     path('profile/', views.profile_view, name='profile'),
     path('edit_profile/', views.edit_profile, name='edit_profile'),
     path('search/', views.search, name='search'),
+    url(r'^project/(\d+)/$',views.project_detail,name ='project_detail'),
+    url(r'^new/project$', views.new_project, name='new-project'),
+    path('delete/<int:project_id>/', views.delete_project, name='delete_project'),
+    path('update_project/<int:project_id>/', views.update_project, name='update_project'),
     # url(r'^api/movie/$', views.MovieList.as_view()),
     # url(r'^api/book/$', views.BookList.as_view())
 ]

@@ -1,3 +1,5 @@
+{% extends 'awards/base.html' %}
+{% load bootstrap3 %} {% load static %}
 <h1>Profile Information</h1>
 <div class="col-md-6">
 
@@ -6,3 +8,5 @@
 <p> Email :{{user.email}}</p>
 <p>Phone Number : {{user.userprofile.phone_number}}</p>
 <img src="{{ MEDIA_URL}}{{user.userprofile.profile_photo.url}}" alt="Profile Photo"><br>
+<hr>
+<button class="btn btn-secondary"> <a href="{% url 'profile' %}"> Edit Profile</a> </button>
