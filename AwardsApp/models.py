@@ -19,7 +19,7 @@ class UserProfile(models.Model):
 
     def delete_profile(self):
         self.delete()
-        
+
 
 class Project(models.Model):
     project_title = models.CharField(max_length= 30)
@@ -31,8 +31,19 @@ class Project(models.Model):
     def __str__(self):
         return self.project_title
 
+    def save_project(self):
+        self.save()
+
+    def delete_project(self):
+        self.delete()
+
+   
+
 class Rating(models.Model):
     design = models.IntegerField(choices=list(zip(range(1, 11), range(1, 11))), default=0)
     usability = models.IntegerField(choices=list(zip(range(1, 11), range(1, 11))), default=0)
     content = models.IntegerField(choices=list(zip(range(1, 11), range(1, 11))), default=0)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.project} Rating' 
