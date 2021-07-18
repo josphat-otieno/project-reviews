@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, default=1)
-    profile_photo = models.ImageField(upload_to = 'profile/')
+    profile_photo = models.ImageField(upload_to = 'profile/', default='default.png')
     bio = models.TextField()
     phone_number = models.IntegerField()
 
@@ -38,8 +38,8 @@ class Project(models.Model):
         self.delete()
 
     @classmethod
-    def search_project(cls, title):
-        return cls.objects.filter(title__icontains=title).all()
+    def search_project(cls, project_title):
+        return cls.objects.filter(title__icontains=project_title).all()
 
 class Rating(models.Model):
     design = models.IntegerField(choices=list(zip(range(1, 11), range(1, 11))), default=0)

@@ -1,0 +1,8 @@
+<h1>Profile Information</h1>
+<div class="col-md-6">
+
+<h3> Name: {{user.first_name}}</h3>
+<p> Bio :{{user.userprofile.bio}}</p>
+<p> Email :{{user.email}}</p>
+<p>Phone Number : {{user.userprofile.phone_number}}</p>
+<img src="{{ MEDIA_URL}}{{user.userprofile.profile_photo.url}}" alt="Profile Photo"><br>
