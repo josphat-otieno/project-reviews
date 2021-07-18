@@ -37,7 +37,9 @@ class Project(models.Model):
     def delete_project(self):
         self.delete()
 
-   
+    @classmethod
+    def search_project(cls, title):
+        return cls.objects.filter(title__icontains=title).all()
 
 class Rating(models.Model):
     design = models.IntegerField(choices=list(zip(range(1, 11), range(1, 11))), default=0)
