@@ -16,14 +16,26 @@
         
     {% endblock %}
    
-
+    <!-- <script type="text/javascript"> -->
+        // random background pattern
+        $(function(){
+    
+          // See more options here: https://github.com/qrohlf/trianglify#options
+          var ops = {
+            noiseIntensity: 0,
+          }
+          var t = new Trianglify(ops);
+          var pattern = t.generate(document.body.clientWidth, document.body.clientHeight);
+          document.body.setAttribute('style', 'background_image: '+pattern.dataUrl);
+        });
+    <!-- </script> -->
 </head>
 <body>
   
     {% block content %}{% endblock %}
     {% block scripts %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
- {% bootstrap_javascript %}
-{% endblock %}
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+            {% bootstrap_javascript %}
+     {% endblock %}
 </body>
 </html>

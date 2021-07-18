@@ -26,11 +26,9 @@ class Project(models.Model):
     project_image = models.ImageField(upload_to = 'images/')
     project_description = models.TextField()
     project_link = models.URLField()
-    profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    profile = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
 
-    def __str__(self):
-        return self.project_title
-
+    
     def save_project(self):
         self.save()
 

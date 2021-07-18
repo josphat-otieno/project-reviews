@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.models import User
+from django.db.models import fields
 from .models import UserProfile,Project, Rating
 
 class EditProfileForm(UserChangeForm):
@@ -23,4 +24,4 @@ class ProfileUpdateForm(forms.ModelForm):
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
-        exclude = ['profile']
+        fields = ['project_title', 'project_image', 'project_description', 'project_link']

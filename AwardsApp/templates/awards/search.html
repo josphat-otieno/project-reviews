@@ -1,15 +1,14 @@
 {% extends 'awards/base.html' %}
 {% load bootstrap3 %} {% load static %}
 
-{%extends 'all-news/base.html'%} 
 {% block content %}
-<div class="container">
+<div class="container"  style="padding-top: 100px;">
 
   <div class="row">
     {% if projects%}
-      <h2>Found {{ projects|length }} of searched term {{message}}</h2>
+      <h2>Found {{ projects|length }} projects</h2>
     {% else %}
-      <h2> Found 0 articles for the search term {{message}}</h2>
+      <h2> Found 0 projects for the search term {{message}}</h2>
     {% endif %}
 
   </div>
@@ -17,12 +16,17 @@
   <div class="row">
 
   {% if projects %}
-    {% for project projects %}
+    {% for project in projects %}
       <div class="col-sm-6 col-md-3">
           <h1>{{project.project_title}}</h1>
+          <p>{{project.project_description}}</p>
+          <img src="{{project.project_image.url}}" alt="">
       </div>
     {% endfor %}
   {% endif %}
   </div>
 </div>
+{% endblock %}
+{% block scripts %} {{block.super}}
+  <script type="text/javascript" src="{% static 'js/main.js '%}"></script>
 {% endblock %}

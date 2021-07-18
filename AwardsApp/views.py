@@ -2,13 +2,20 @@ from django.shortcuts import render, redirect, get_object_or_404,get_list_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import UserProfile, Project, Rating
-from django.http import Http404
+from django.http import Http404, HttpResponse
+import json
+from django.http import QueryDict
+from django.db.models import Avg
 from .forms import EditProfileForm, ProfileUpdateForm, ProjectForm
 
 # Create your views here.
 # @login_required(login_url='/accounts/login/')
 def index(request):
-    all_projects = Project.objects.reverse()
+    all_projects = Project.objects.reverse().annotate(
+        avg_design = Avg('rating__design'),
+        avg_usability = Avg('rating__usability'),
+        avg_content=Avg('rating__content'),
+    )
     return render(request, 'awards/index.html', {"all_projects":all_projects})
 
 def project_detail(request, project_id):
@@ -80,20 +87,6 @@ def edit_profile(request):
         context = {"user_form":user_form, "profile_form":profile_form, "user":user}
         return render(request, 'awards/edit_profile.html', context)
 
-# def search(request):
-#     if request.method == 'GET':
-#         project_title = request.GET.get("project_title")
-#         results = Project.objects.filter(project_title__icontains=project_title).all()
-#         message = f'name'
-#         context= {
-#             'results': results,
-#             'message': message
-#         }
-#         return render(request, 'awards/search.html', context)
-#     else:
-#         message = "You haven't searched for any Project"
-#     return render(request, 'awards/search.html', {'message': message})
-
 
 def search(request):
     
@@ -108,3 +101,19 @@ def search(request):
         message = "You haven't searched for any project"
         return render(request, 'awards/search.html',{"message":message})
 
+# def delete_project(request):
+#     if request.method == 'DELETE':
+#         project = Project.objects.get(pk=int(QueryDict(request.body).get('project_id')))
+#         project.delete()
+
+#         response_data ={}
+#         response_data['msg'] = 'Project was deleted successfully'
+#         return HttpResponse(
+#             json.dumps(response_data),
+#             content_type="application/json"
+#         )
+#     else:
+#         return HttpResponse(
+#             json.dumps({"nothing to see": "this isn't happening"}),
+#             content_type="application/json"
+#         )

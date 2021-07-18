@@ -1,4 +1,4 @@
-{% extends 'instagram/base.html' %}
+{% extends 'awards/base.html' %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
@@ -13,7 +13,7 @@
             <p>{{project.project_description}}</p>
             <hr>
             <button class="btn btn-md btn-success"> <a href="{% url 'update_project' project.id %}">Update</a></button>
-            <button class="btn btn-md btn-warning"><a href="{% url 'delete_image' project.id %}">Delete</a></button>
+            <button class="btn btn-md btn-warning"><a href="{% url 'delete_project' project.id %}">Delete</a></button>
         </div>
        
 

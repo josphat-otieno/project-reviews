@@ -2,26 +2,37 @@
 {% load bootstrap3 %} {% load static %}
 
 {% block content %}
-<div class="container">
+<div class="container" style="padding-top: 90px;">
     <h1>Welcome to My Pojects Review App</h1>
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-7">
-            {% for project in all_projects %}
-                <h2 class="text text-center">{{project.project_title}}</h2>
-                <img src="{{project.project_image.url}}" alt="{{project.project_title}}">
-                <p>{{project.project_description}}</p>
-                <p>{{project.project_link}}</p>
-
-            {% endfor %}
+            <ul id="proj">
+                <li id="project -{{project.id}}">
+                    {% for project in all_projects %}
+                    <h2 class="text text-center">{{project.project_title}}</h2>
+                   <a href="{% url 'project_detail' project.id %}"> <img src="{{project.project_image.url}}" alt="{{project.project_title}}" style="width: 400; height: 400;"></a>
+                    <p>{{project.project_description}}</p>
+                    <p>{{project.project_link}}</p>
+                    <h3>Reviews</h3>
+                    <p>Design : {{project.avg_design}}</p>
+                    <p>Usability : {{project.avg_usability}}</p>
+                    <p> Content : {{project.avg_content}}</p>
+                    <button class="btn btn-md btn-success"> <a href="{% url 'update_project' project.id %}">Update</a></button>
+                    <button class="btn btn-md btn-warning"><a href="{% url 'delete_project' project.id %}">Delete</a></button>
+                 {% endfor %}
+                </li>
+            </ul>
+           
         </div>
         <div class="col-md-2"></div>
     </div>
 </div>
-
-
-
 </div>
 
 {% endblock %}
+{% block scripts %} {{block.super}}
+  <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+{% endblock %}
+
 
