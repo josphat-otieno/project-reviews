@@ -36,7 +36,7 @@ def edit_profile(request):
         context = {"user_form":user_form, "profile_form":profile_form, "user":user}
         return render(request, 'awards/edit_profile.html', context)
 
-def search_project(request):
+def search(request):
     if request.method == 'GET':
         project_title = request.GET.get("project_title")
         results = Project.objects.filter(title__icontains=project_title).all()
