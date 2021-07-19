@@ -3,13 +3,15 @@ from django.db.models.aggregates import Max
 from django.db.models.base import Model
 from django.contrib.auth.models import User
 
+
 # Create your models here.
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, default=1)
     profile_photo = models.ImageField(upload_to = 'profile/', default='default.png')
     bio = models.TextField()
-    phone_number = models.IntegerField()
+    phone_number = models.IntegerField(default=717878813)
+    
 
     def __str__(self):
         return self.user

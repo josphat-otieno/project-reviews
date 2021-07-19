@@ -1,12 +1,18 @@
-from django.shortcuts import render, redirect, get_object_or_404,get_list_or_404
+
+import json
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .models import UserProfile, Project, Rating
-from django.http import Http404, HttpResponse
-import json
-from django.http import QueryDict
 from django.db.models import Avg
-from .forms import EditProfileForm, ProfileUpdateForm, ProjectForm
+from django.http import Http404, HttpResponse, QueryDict, response
+from django.shortcuts import (get_list_or_404, get_object_or_404, redirect,
+                              render)
+from rest_framework.decorators import APIView, api_view
+from rest_framework.serializers import Serializer
+from .forms import EditProfileForm, ProfileUpdateForm, ProjectForm, RatingsForm
+from .models import Project, Rating, UserProfile
+from .serializer import ProjectSerializer
+from rest_framework.response import Response
+
 
 # Create your views here.
 # @login_required(login_url='/accounts/login/')
@@ -20,14 +26,14 @@ def index(request):
 
 def project_detail(request, project_id):
     try:
-        project = Project.objects.get(id = project_id)
-        
-        
+        project = Project.objects.get(id = project_id)  
+    
     except Project.DoesNotExist:
         raise Http404()
 
     return render(request,"awards/project_detail.html", {"project":project})
 
+# @login_required(login_url='/accounts/login/')
 def new_project(request):
     current_user =request.user
     if request.method == 'POST':
@@ -63,13 +69,14 @@ def update_project(request, project_id):
 
     return render (request, 'awards/update_project.html', context)
 
-
+# @login_required(login_url='/accounts/login/')
 def profile_view(request):
     user = request.user
     user = User.objects.get(username = user.username)
 
     return render (request, 'awards/profile.html', {"user":user})
 
+# @login_required(login_url='/accounts/login/')
 def edit_profile(request):
     user = request.user
     if request.method == 'POST':
@@ -87,7 +94,7 @@ def edit_profile(request):
         context = {"user_form":user_form, "profile_form":profile_form, "user":user}
         return render(request, 'awards/edit_profile.html', context)
 
-
+# @login_required(login_url='/accounts/login/')
 def search(request):
     
     if 'projects' in request.GET and request.GET["projects"]:
@@ -100,6 +107,20 @@ def search(request):
     else:
         message = "You haven't searched for any project"
         return render(request, 'awards/search.html',{"message":message})
+
+def rating(request, project_id):
+    user = request.user
+    project = Project.objects.get(id=project_id)
+    if request.method == 'POST':
+        rating_form = RatingsForm(request.POST, request.FILES, instance=project)
+        if rating_form.is_valid():
+            rating = rating_form.save(commit = False)
+            rating.save()
+            return redirect('index')
+    else:
+        rating_form = RatingsForm()
+
+    return render(request, 'awards/rate.html' ,{"user":user, "rating_form":rating_form})
 
 # def delete_project(request):
 #     if request.method == 'DELETE':
@@ -117,3 +138,14 @@ def search(request):
 #             json.dumps({"nothing to see": "this isn't happening"}),
 #             content_type="application/json"
 #         )
+
+@api_view(['GET', 'POST'])
+def project_collection(request):
+    if request.method == 'GET':
+        projects = Project.objects.all()
+        serializer = ProjectSerializer(projects, many=True)
+        return Response(serializer.data)
+
+    elif request.method== 'POST':
+        data = {}
+

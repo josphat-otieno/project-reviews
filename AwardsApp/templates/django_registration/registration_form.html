@@ -1,4 +1,4 @@
-
+{% extends 'django_registration/base.html' %}
 {% load bootstrap3 %}
 
 {% block content %}
@@ -21,6 +21,8 @@
             <input type="hidden" name="next" value="{{next}}">
           </form>
         </div>
+        <p>Already have an account? <a href="/accounts/login"> <button class="btn btn-md btn-primary">LogIn</button></a></p>
+            <input type="hidden" name="next" value="{{next}}">
       </div>
     </div>
     <!-- empty div -->
@@ -28,3 +30,4 @@
   </div>
 </div>
 {% endblock %}
+

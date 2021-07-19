@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^new/project$', views.new_project, name='new-project'),
     path('delete/<int:project_id>/', views.delete_project, name='delete_project'),
     path('update_project/<int:project_id>/', views.update_project, name='update_project'),
+    path('rating/<int:project_id>', views.rating, name='rating')
     # url(r'^api/movie/$', views.MovieList.as_view()),
     # url(r'^api/book/$', views.BookList.as_view())
 ]

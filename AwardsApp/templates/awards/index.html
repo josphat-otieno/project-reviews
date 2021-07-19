@@ -18,8 +18,7 @@
                     <p>Design : {{project.avg_design}}</p>
                     <p>Usability : {{project.avg_usability}}</p>
                     <p> Content : {{project.avg_content}}</p>
-                    <button class="btn btn-md btn-success"> <a href="{% url 'update_project' project.id %}">Update</a></button>
-                    <button class="btn btn-md btn-warning"><a href="{% url 'delete_project' project.id %}">Delete</a></button>
+                    <a href="{% url 'rating' project.id %}">Rate</a>
                  {% endfor %}
                 </li>
             </ul>
