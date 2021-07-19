@@ -4,6 +4,7 @@ import re
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Avg
+from rest_framework import status
 from django.http import Http404, HttpResponse, QueryDict, response
 from django.shortcuts import (get_list_or_404, get_object_or_404, redirect,
                               render)
@@ -12,7 +13,7 @@ from rest_framework.decorators import APIView, api_view
 from rest_framework.serializers import Serializer
 from .forms import EditProfileForm, ProfileUpdateForm, ProjectForm, RatingsForm
 from .models import Project, Rating, UserProfile
-from .serializer import ProjectSerializer
+from .serializers import ProjectSerializer, ProfileSerializer
 from rest_framework.response import Response
 
 
@@ -130,6 +131,14 @@ class ProjectList(APIView):
         projects = Project.objects.all()
         serializers = ProjectSerializer(projects, many=True)
         return Response(serializers.data)
+
+    def post(self, request, format=None):
+        serializers=ProjectSerializer(data = request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # def delete_project(request):
 #     if request.method == 'DELETE':
