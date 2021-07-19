@@ -1,11 +1,13 @@
 
 import json
+import re
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Avg
 from django.http import Http404, HttpResponse, QueryDict, response
 from django.shortcuts import (get_list_or_404, get_object_or_404, redirect,
                               render)
+from rest_framework import serializers
 from rest_framework.decorators import APIView, api_view
 from rest_framework.serializers import Serializer
 from .forms import EditProfileForm, ProfileUpdateForm, ProjectForm, RatingsForm
@@ -122,6 +124,13 @@ def rating(request, project_id):
 
     return render(request, 'awards/rate.html' ,{"user":user, "rating_form":rating_form})
 
+class ProjectList(APIView):
+    user = User.objects.all()
+    def get(self, request, format=None):
+        projects = Project.objects.all()
+        serializers = ProjectSerializer(projects, many=True)
+        return Response(serializers.data)
+
 # def delete_project(request):
 #     if request.method == 'DELETE':
 #         project = Project.objects.get(pk=int(QueryDict(request.body).get('project_id')))
@@ -139,13 +148,13 @@ def rating(request, project_id):
 #             content_type="application/json"
 #         )
 
-@api_view(['GET', 'POST'])
-def project_collection(request):
-    if request.method == 'GET':
-        projects = Project.objects.all()
-        serializer = ProjectSerializer(projects, many=True)
-        return Response(serializer.data)
+# @api_view(['GET', 'POST'])
+# def project_collection(request):
+#     if request.method == 'GET':
+#         projects = Project.objects.all()
+#         serializer = ProjectSerializer(projects, many=True)
+#         return Response(serializer.data)
 
-    elif request.method== 'POST':
-        data = {}
+#     elif request.method== 'POST':
+#         pass
 
