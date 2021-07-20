@@ -14,7 +14,15 @@ from pathlib import Path
 from decouple import config, Csv
 import django_on_heroku
 import dj_database_url
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
+cloudinary.config( 
+  cloud_name = "dqav5rjw8", 
+  api_key = "522289631973827", 
+  api_secret = "eLj36d2-Ys_hnz5aYJMIVLrga60" 
+)
 
 MODE=config("MODE",default="dev")
 SECRET_KEY=config('SECRET_KEY')
@@ -84,6 +92,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap3',
     'rest_framework',
+    'cloudinary'
     
 ]
 
