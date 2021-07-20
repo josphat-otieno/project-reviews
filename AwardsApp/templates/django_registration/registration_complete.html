@@ -1,6 +1,6 @@
 {% load static %}
 {% load bootstrap3 %}
-
+{% include 'navbar.html' %}
 <!DOCTYPE html>
 <html>
 
@@ -16,11 +16,12 @@
 </head>
 
 <body>
-<div class="cotainer-fluid "style="padding-top: 90px; background-color: #023047" >
+<div class="cotainer-fluid " style="padding-top: 90px; background-color: #023047; color: antiquewhite;">
     <div class="container">
         <div class="row">
             <div class="col-md-4"></div>
             <div class="col-sm-4">
+                <h1 class="text-center">Login </h1>
                 <form class="form-group" action="/accounts/login/" method="post">
                     {% csrf_token %}
                     <div class="form-group">
