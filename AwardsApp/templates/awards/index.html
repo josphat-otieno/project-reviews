@@ -5,17 +5,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300&family=Nanum+Gothic:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 {% block content %}
-<div class="container-fluid" style="padding-top: 90px; background-color: #023047; color: antiquewhite;">
+<div class="container-fluid" style="padding-top: 90px; background-color: #023047; color: antiquewhite; font-family: Assistant;">
     <div class="container">
-        <h1 style="color: antiquewhite;">Welcome to My Pojects Review App</h1>
+        <h1 style="color: antiquewhite; align-items: center;" class="text-center">PROJECTS</h1>
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8">
 
             {% for project in all_projects %}
-            <div class="panel" style="background-color: #023e7d;">
+            <div class="panel" style="background-color: #023e7d;font-family: Assistant;">
                 <div class="panel-header">
-                    <h2 class="text text-center text-capitalize">{{project.project_title}}</h2>
+                    <h2 class="text text-center text-capitalize" >{{project.project_title}}</h2>
                 </div>
                 <div class="panel-body">
                     <a href="{% url 'project_detail' project.id %}"> <img src="{{project.project_image.url}}"
