@@ -1,23 +1,41 @@
 {% extends 'awards/base.html' %}
 {% load bootstrap3 %} {% load static %}
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300&family=Nanum+Gothic:wght@700&display=swap"
+  rel="stylesheet">
 
 {% block content %}
-<div class="container" style="padding-top: 100px;">
-    <h1>Profile Information</h1>
+<div class="container-fluid" style="padding-top: 90px; background-color: #023047">
+  <div class="container" style="padding-top: 100px;">
+    <div class="row">
+      <div class="col-md-6" style="color: antiquewhite;">
+        <h1>Profile Information</h1>
+        <img src="{{user.userprofile.profile_photo.url}}" alt="Profile Photo" style="border-radius: 4px;"><br>
+        <h3> Name: <span class="text text-capitalize">{{user.first_name}} {{user.last_name}}</span></h3>
+        <p><span class="text-strong">Bio </span> :{{user.userprofile.bio}}</p><br>
+        <h2>COntact Info</h2>
+        <p>Email :{{user.email}}</p>
+        <p>Phone Number : {{user.userprofile.phone_number}}</p>
+        <hr>
+        <button class="btn btn-secondary"> <a href="{% url 'edit_profile' %}"> Edit Profile</a> </button>
+      </div>
+      <div class="col-md-6">
+        <h2 class="text-center" style="color: antiquewhite;">Projects</h2>
+        {% if user.is_authenticated %}
+        {% for project in projects %}
+        <p>
+          <a style="color: antiquewhite; font-family: Assistant; font-size: 25px; text-transform: capitalize;"
+            href="{{project.project_link}}">{{ project.project_title}}</a>
+        </p>
+        {% endfor %}
+        {% endif %}
 
+      </div>
+    </div>
+  </div>
 
-    <h3> Name: {{user.first_name}} {{user.last_name}}</h3>
-    <p> Bio :{{user.userprofile.bio}}</p>
-    <p> Email :{{user.email}}</p>
-    <p>Phone Number : {{user.userprofile.phone_number}}</p>
-
-    
-    <img src="{{user.userprofile.profile_photo.url}}" alt="Profile Photo"><br>
-    <hr>
-    <button class="btn btn-secondary"> <a href="{% url 'edit_profile' %}"> Edit Profile</a> </button>
 </div>
 
 {% endblock %}
 {% block scripts %} {{block.super}}
-  <script type="text/javascript" src="{% static 'js/main.js '%}"></script>
+<script type="text/javascript" src="{% static 'js/main.js '%}"></script>
 {% endblock %}

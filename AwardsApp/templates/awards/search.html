@@ -2,31 +2,41 @@
 {% load bootstrap3 %} {% load static %}
 
 {% block content %}
-<div class="container"  style="padding-top: 100px;">
+<div class="continer-fluid" style="padding-top: 90px; background-color: #023047">
+  <div class="container" style="padding-top: 100px; color: antiquewhite;">
 
-  <div class="row">
-    {% if projects%}
+    <div class="row">
+      {% if projects%}
       <h2>Found {{ projects|length }} projects</h2>
-    {% else %}
+      {% else %}
       <h2> Found 0 projects for the search term {{message}}</h2>
-    {% endif %}
+      {% endif %}
 
-  </div>
+    </div>
 
-  <div class="row">
-
-  {% if projects %}
-    {% for project in projects %}
-      <div class="col-sm-6 col-md-3">
-          <h1>{{project.project_title}}</h1>
-          <p>{{project.project_description}}</p>
-          <img src="{{project.project_image.url}}" alt="">
+    <div class="row">
+      <div class="col-md-3"></div>
+      {% if projects %}
+      {% for project in projects %}
+      
+      <div class=" col-md-6">
+        <div class="panel">
+          <div class="panel-header">
+            <h1 style="color: blue;">{{project.project_title}}</h1>
+          </div>
+          <div class="panel-body"><img src="{{project.project_image.url}}" style="height: 400px; width: 500px;" alt="">
+            <p style="color: blue;">{{project.project_description}}</p>
+          </div>
+        </div>
       </div>
-    {% endfor %}
-  {% endif %}
+      <div class="col-md-3"></div>
+      {% endfor %}
+      {% endif %}
+    </div>
   </div>
+
 </div>
 {% endblock %}
 {% block scripts %} {{block.super}}
-  <script type="text/javascript" src="{% static 'js/main.js '%}"></script>
+<script type="text/javascript" src="{% static 'js/main.js '%}"></script>
 {% endblock %}

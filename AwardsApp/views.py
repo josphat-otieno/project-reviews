@@ -1,6 +1,5 @@
 
 import json
-import re
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Avg
@@ -8,9 +7,7 @@ from rest_framework import status
 from django.http import Http404, HttpResponse, QueryDict, response
 from django.shortcuts import (get_list_or_404, get_object_or_404, redirect,
                               render)
-from rest_framework import serializers
 from rest_framework.decorators import APIView, api_view
-from rest_framework.serializers import Serializer
 from .forms import EditProfileForm, ProfileUpdateForm, ProjectForm, RatingsForm
 from .models import Project, Rating, UserProfile
 from .serializers import ProjectSerializer, ProfileSerializer
@@ -24,6 +21,7 @@ def index(request):
         avg_design = Avg('rating__design'),
         avg_usability = Avg('rating__usability'),
         avg_content=Avg('rating__content'),
+       # avg_score = Avg('rating__design', 'rating__usability', 'rating__score')
     )
     return render(request, 'awards/index.html', {"all_projects":all_projects})
 
@@ -34,7 +32,27 @@ def project_detail(request, project_id):
     except Project.DoesNotExist:
         raise Http404()
 
-    return render(request,"awards/project_detail.html", {"project":project})
+    current_user = request.user
+    ratings = Rating.objects.all()
+    if request.method == 'POST':
+        review_form = RatingsForm(request.POST)
+        if review_form.is_valid():
+            design = review_form.cleaned_data['design']
+            usability = review_form.cleaned_data['usability']
+            content = review_form.cleaned_data['content']
+            review = Rating()
+            review.project=project
+            review.user = current_user
+            review.usability=usability
+            review.design=design
+            review.content = content
+            review.save()
+
+    else:
+        review_form = RatingsForm()
+
+
+    return render(request,"awards/project_detail.html", {"project":project, "review_form": review_form, "ratings":ratings})
 
 # @login_required(login_url='/accounts/login/')
 def new_project(request):
@@ -75,9 +93,10 @@ def update_project(request, project_id):
 # @login_required(login_url='/accounts/login/')
 def profile_view(request):
     user = request.user
+    projects = Project.objects.all()
     user = User.objects.get(username = user.username)
 
-    return render (request, 'awards/profile.html', {"user":user})
+    return render (request, 'awards/profile.html', {"user":user, "projects":projects})
 
 # @login_required(login_url='/accounts/login/')
 def edit_profile(request):

@@ -14,19 +14,26 @@
  {% endblock %}
 </head>
 
-<body>
-<div class="container" style="padding-top: 100px;">
-  <form  id="form" action="" method="post" enctype="multipart/form-data">
-    {%csrf_token%}
-    {% bootstrap_form rating_form.as_p %}
-    <input type="submit" class="btn btn-success btn-md" value="Rate">
-  </form>
+{% block content %}
+<div class="contianer-fluid" style="padding-top: 90px; background-color: #023047" >
+  <div class="container" style="padding-top: 100px; color: antiquewhite;">
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <h1 class="text-center">Rate/Review {{project.title}}</h1>
+        <form  id="form" action="" method="post" enctype="multipart/form-data">
+        {%csrf_token%}
+        {% bootstrap_form rating_form %}
+        <input type="submit" class="btn btn-success btn-md" value="Rate">
+      </form>
+    
+       {% block scripts %}
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      {% bootstrap_javascript %} {% endblock %}</div>
+      <div class="col-md-4"></div>
+    </div>
+    
+  </div></div>
 
-   {% block scripts %}
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  {% bootstrap_javascript %} {% endblock %}
-</div>
 
-</body>
-
-</html>
+{% endblock %}

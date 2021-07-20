@@ -1,7 +1,17 @@
-<p>Are you sure you want to delete "{{item}}"</p>
 
-<a href="{% url 'index' %}">cancel</a>
-<form method="POST" action="">
-    {% csrf_token %}
-    <input type="submit" name="Confirm">
-</form>
+{% load bootstrap3 %} {% load static %}
+<div class="container" style="padding-top: 200px;">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4"><p>Are you sure you want to delete "{{item}}"</p>
+
+            <a href="{% url 'index' %}">cancel</a>
+            <form method="POST" action="">
+                {% csrf_token %}
+                <input type="submit" name="Confirm">
+            </form>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+
