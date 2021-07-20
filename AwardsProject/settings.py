@@ -9,14 +9,16 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 import os
 from pathlib import Path
 from decouple import config, Csv
 import django_on_heroku
 import dj_database_url
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
+
 
 cloudinary.config( 
   cloud_name = "dqav5rjw8", 
