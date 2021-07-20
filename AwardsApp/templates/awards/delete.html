@@ -1,17 +1,23 @@
-
+{% extends 'awards/base.html' %}
 {% load bootstrap3 %} {% load static %}
-<div class="container" style="padding-top: 200px;">
-    <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4"><p>Are you sure you want to delete "{{item}}"</p>
 
-            <a href="{% url 'index' %}">cancel</a>
-            <form method="POST" action="">
-                {% csrf_token %}
-                <input type="submit" name="Confirm">
-            </form>
+{% block content %}
+<div class="continer-fluid " style="padding-top: 90px; background-color: #023047">
+    <div class="container" style="padding-top: 70">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <p>Are you sure you want to delete "{{item}}"</p>
+    
+                <a  class="btn btn-primary btn-md" href="{% url 'index' %}">cancel</a>
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <input class="btn btn-danger btn-lg" type="submit" name="Confirm">
+                </form>
+            </div>
+            <div class="col-md-4"></div>
         </div>
-        <div class="col-md-4"></div>
     </div>
 </div>
 
+{% endblock %}
