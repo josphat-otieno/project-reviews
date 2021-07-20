@@ -10,14 +10,14 @@
         <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-6">
-                <h1 style="text-transform: capitalize;">{{project.project_title}}</h1>
+                <h1 style="text-transform: capitalize; color: antiquewhite;">{{project.project_title}}</h1>
                 <img src="{{project.project_image.url}}" alt="" style="height: 400px ;width: 500px;">
             </div>
-            <div class="col-md-4" style="padding-top: 90px;" >
+            <div class="col-md-4" style="padding-top: 90px; color: antiquewhite;" >
                 <h2>Project Description</h2>
                 <p>{{project.project_description}}</p>
                 <hr>
-                <button class="btn btn-md btn-warning"><a href="{% url 'delete_project' project.id %}">Delete</a></button>
+   
             </div>
     
     
