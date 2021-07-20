@@ -15,7 +15,7 @@ from rest_framework.response import Response
 
 
 # Create your views here.
-# @login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 def index(request):
     all_projects = Project.objects.reverse().annotate(
         avg_design = Avg('rating__design'),
@@ -54,7 +54,7 @@ def project_detail(request, project_id):
 
     return render(request,"awards/project_detail.html", {"project":project, "review_form": review_form, "ratings":ratings})
 
-# @login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 def new_project(request):
     current_user =request.user
     if request.method == 'POST':
@@ -69,7 +69,7 @@ def new_project(request):
         project_form = ProjectForm()
     return render (request, 'awards/new_project.html', {"project_form":project_form})
 
-# @login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 def delete_project(request, project_id):
     item = Project.objects.get(id =project_id)
     if request.method =='POST':
@@ -77,7 +77,7 @@ def delete_project(request, project_id):
         return redirect('/')
     return render(request, 'awards/delete.html', {"item":item})
    
-# @login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 def update_project(request, project_id):
     project = Project.objects.get(id=project_id)
     update_form = ProjectForm(instance=project)
@@ -90,7 +90,7 @@ def update_project(request, project_id):
 
     return render (request, 'awards/update_project.html', context)
 
-# @login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 def profile_view(request):
     user = request.user
     projects = Project.objects.all()
@@ -98,7 +98,7 @@ def profile_view(request):
 
     return render (request, 'awards/profile.html', {"user":user, "projects":projects})
 
-# @login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 def edit_profile(request):
     user = request.user
     if request.method == 'POST':
@@ -116,7 +116,7 @@ def edit_profile(request):
         context = {"user_form":user_form, "profile_form":profile_form, "user":user}
         return render(request, 'awards/edit_profile.html', context)
 
-# @login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 def search(request):
     
     if 'projects' in request.GET and request.GET["projects"]:
