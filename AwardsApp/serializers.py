@@ -19,4 +19,4 @@ class ProfileSerializer(serializers.ModelSerializer):
         user = serializers.SlugRelatedField(
             queryset = User.objects.all(), slug_field='username'
         )
-        fields = ['profile_photo', 'bio', 'phone_number']
+        fields = ['user','profile_photo', 'bio', 'phone_number']

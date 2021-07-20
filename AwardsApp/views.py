@@ -3,7 +3,7 @@ import json
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Avg
-from rest_framework import status
+from rest_framework import serializers, status
 from django.http import Http404, HttpResponse, QueryDict, response
 from django.shortcuts import (get_list_or_404, get_object_or_404, redirect,
                               render)
@@ -12,6 +12,7 @@ from .forms import EditProfileForm, ProfileUpdateForm, ProjectForm, RatingsForm
 from .models import Project, Rating, UserProfile
 from .serializers import ProjectSerializer, ProfileSerializer
 from rest_framework.response import Response
+from rest_framework import viewsets
 
 
 # Create your views here.
@@ -159,30 +160,11 @@ class ProjectList(APIView):
 
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# def delete_project(request):
-#     if request.method == 'DELETE':
-#         project = Project.objects.get(pk=int(QueryDict(request.body).get('project_id')))
-#         project.delete()
+class ProfileList(APIView):
+    user = User.objects.all()
+    def  get(self, request, format = None):
+        profile = UserProfile.objects.all()
+        serializers =ProfileSerializer(profile, many=False)
+        return Response(serializers.data)
 
-#         response_data ={}
-#         response_data['msg'] = 'Project was deleted successfully'
-#         return HttpResponse(
-#             json.dumps(response_data),
-#             content_type="application/json"
-#         )
-#     else:
-#         return HttpResponse(
-#             json.dumps({"nothing to see": "this isn't happening"}),
-#             content_type="application/json"
-#         )
-
-# @api_view(['GET', 'POST'])
-# def project_collection(request):
-#     if request.method == 'GET':
-#         projects = Project.objects.all()
-#         serializer = ProjectSerializer(projects, many=True)
-#         return Response(serializer.data)
-
-#     elif request.method== 'POST':
-#         pass
 
