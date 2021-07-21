@@ -10,9 +10,8 @@ class UserProfile(models.Model):
     profile_photo = CloudinaryField('profile')
     bio = models.TextField(default='')
     phone_number = models.IntegerField(default=717878813)
-    #  image = CloudinaryField('image')
-    
 
+    
     def __str__(self):
         return self.user
 
