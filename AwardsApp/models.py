@@ -48,3 +48,6 @@ class Rating(models.Model):
 
     def __str__(self):
         return f'{self.project} Rating' 
+
+    def save_rating(self):
+        self.save()
